@@ -1,3 +1,5 @@
+// external imports
+const User = require("../models/People");
 const bcrypt = require("bcrypt");
 async function addUser(req, res, next) {
   try {
@@ -10,6 +12,7 @@ async function addUser(req, res, next) {
     await newUser.save();
     res.status(201).json({
       message: "User Created Successfully",
+      success: true,
     });
   } catch (error) {
     res.status(500).json({
@@ -18,6 +21,7 @@ async function addUser(req, res, next) {
           msg: "Unknown error occured!",
         },
       },
+      success: false,
     });
   }
 }
