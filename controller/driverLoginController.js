@@ -3,31 +3,31 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
 // internal import
-const User = require("../models/People");
+const Driver = require("../models/Driver");
 
 // do login
 
 async function login(req, res, next) {
   try {
     // find user with requested email/phonenumber
-    const user = await User.findOne({
+    const driver = await Driver.findOne({
       $or: [{ email: req.body.username }, { mobile: req.body.username }],
     });
-    if (user && user._id) {
+    if (driver && driver._id) {
       // compare password
       const isValidPassword = await bcrypt.compare(
         req.body.password,
-        user.password
+        driver.password
       );
       if (isValidPassword) {
         // prepare the user object to generate token
-        const userObject = {
-          username: user.name,
-          email: user.email,
-          mobile: user.mobile,
+        const driverObject = {
+          username: driver.name,
+          email: driver.email,
+          mobile: driver.mobile,
         };
         // generate token
-        const token = jwt.sign(userObject, process.env.JWT_SECRET, {
+        const token = jwt.sign(driverObject, process.env.JWT_SECRET, {
           expiresIn: process.env.JWT_EXPIRY,
         });
         // set cookie
@@ -38,12 +38,10 @@ async function login(req, res, next) {
         });
 
         // set logged in user local variable
-        //res.locals.loggedInUser = userObject;
+        res.locals.loggedInUser = driverObject;
         res.status(201).json({
           message: "Login Successful",
           success: true,
-          token: token,
-          user: user._id,
         });
       } else {
         throw createError("Login Failed");

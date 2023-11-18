@@ -3,10 +3,13 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 // internal imports
 const signUpRouter = require("./router/signUpRouter");
 const loginRouter = require("./router/loginRouter");
+const deleteRouter = require("./router/deleteRouter");
+const driverLoginRouter = require("./router/driverLoginRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -24,6 +27,8 @@ mongoose
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
+
+app.use(cors());
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // change this to the domain you want to allow access to))
@@ -44,6 +49,8 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 // Routes
 app.use("/signup", signUpRouter);
 app.use("/login", loginRouter);
+app.use("/driverlogin", driverLoginRouter);
+app.use("/delete", deleteRouter);
 
 // 404 handler
 app.use(notFoundHandler);
