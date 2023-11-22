@@ -44,6 +44,8 @@ async function login(req, res, next) {
           success: true,
           token: token,
           user: user._id,
+          mobile: user.mobile,
+          username: user.name,
         });
       } else {
         throw createError("Login Failed");

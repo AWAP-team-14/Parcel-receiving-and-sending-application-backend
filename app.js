@@ -10,6 +10,7 @@ const signUpRouter = require("./router/signUpRouter");
 const loginRouter = require("./router/loginRouter");
 const deleteRouter = require("./router/deleteRouter");
 const driverLoginRouter = require("./router/driverLoginRouter");
+const createParcelRouter = require("./router/createParcelRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -51,6 +52,7 @@ app.use("/signup", signUpRouter);
 app.use("/login", loginRouter);
 app.use("/driverlogin", driverLoginRouter);
 app.use("/delete", deleteRouter);
+app.use("/createparcel", createParcelRouter);
 
 // 404 handler
 app.use(notFoundHandler);
