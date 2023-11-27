@@ -21,9 +21,6 @@ const {
 const app = express();
 dotenv.config();
 
-app.use(cors());
-// Connect to DB
-
 mongoose
   .connect(process.env.MONGO_CONNECTION_STRING, {
     useNewUrlParser: true,
@@ -31,6 +28,15 @@ mongoose
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
+
+app.use(
+  cors({
+    origin: "*", // Set this to the origin you want to allow, or '*' for any origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true, // Include if you are using credentials (e.g., cookies)
+    optionsSuccessStatus: 204, // Pre-flight requests should return 204 No Content
+  })
+);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // change this to the domain you want to allow access to))
