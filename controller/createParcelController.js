@@ -14,6 +14,10 @@ async function addParcel(req, res, next) {
         Math.floor(Math.random() * (1999 - 1000 + 1)) + 1000
       ).toString();
 
+      let secondRandomNumber = (
+        Math.floor(Math.random() * (2999 - 2000 + 1)) + 2000
+      ).toString();
+
       //check if random number already exists in parcel collection
       while (await Parcel.findOne({ senderCode: randomNumber })) {
         // If exists, generate a new random number
@@ -21,25 +25,44 @@ async function addParcel(req, res, next) {
           Math.floor(Math.random() * (1999 - 1000 + 1)) + 1000
         ).toString();
       }
+      while (await Parcel.findOne({ recipientCode: secondRandomNumber })) {
+        // If exists, generate a new random number
+        secondRandomNumber = (
+          Math.floor(Math.random() * (2999 - 2000 + 1)) + 2000
+        ).toString();
+      }
 
       const locker = await ParcelLocker.findOne({
         location: req.body.sender.address,
       });
-      if (locker) {
+
+      const recipientLocker = await ParcelLocker.findOne({
+        location: req.body.recipient.address,
+      });
+      if (locker && recipientLocker) {
         //if locker exists, then check if there is any empty locker
         const emptyLocker = locker.lockers.find((locker) => !locker.isOccupied);
-        if (emptyLocker) {
+        const recipientEmptyLocker = recipientLocker.lockers.find(
+          (recipientLocker) => !recipientLocker.isOccupied
+        );
+
+        if (emptyLocker && recipientEmptyLocker) {
           //if empty locker exists, then add parcel to that locker
           newParcel = new Parcel({
             ...req.body,
             senderCode: randomNumber,
+            recipientCode: secondRandomNumber,
             senderCabinet: emptyLocker.lockerNumber,
+            recipientCabinet: recipientEmptyLocker.lockerNumber,
           });
           await newParcel.save();
           emptyLocker.isOccupied = true;
+          recipientEmptyLocker.isOccupied = true;
           await locker.save();
+          await recipientLocker.save();
         }
       }
+
       res.status(201).json({
         message: "Parcel Created Successfully",
         success: true,

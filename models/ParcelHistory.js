@@ -2,24 +2,6 @@ const mongoose = require("mongoose");
 
 // Define Parcel schema
 const parcelSchema = new mongoose.Schema({
-  parcelSize: {
-    width: {
-      type: String,
-      required: true,
-    },
-    height: {
-      type: String,
-      required: true,
-    },
-    depth: {
-      type: String,
-      required: true,
-    },
-    weight: {
-      type: String,
-      required: true,
-    },
-  },
   sender: {
     name: {
       type: String,
@@ -73,25 +55,9 @@ const parcelSchema = new mongoose.Schema({
     ],
     default: "Parcel Created",
   },
-  senderCode: {
-    type: String,
-    default: "",
-  },
-  senderCabinet: {
-    type: Number,
-    default: "",
-  },
-  recipientCode: {
-    type: String,
-    default: "",
-  },
-  recipientCabinet: {
-    type: Number,
-    default: "",
-  },
 });
 
 // Create Parcel model
-const Parcel = mongoose.model("Parcel", parcelSchema);
+const ParcelHistory = mongoose.model("ParcelHistory", parcelSchema);
 
-module.exports = Parcel;
+module.exports = ParcelHistory;

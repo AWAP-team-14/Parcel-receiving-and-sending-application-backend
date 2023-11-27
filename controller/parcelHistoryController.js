@@ -1,19 +1,17 @@
-const Parcel = require("../models/Parcel");
+const ParcelHistory = require("../models/ParcelHistory");
 
-async function findParcels(req, res, next) {
+async function findParcelsHistory(req, res, next) {
   try {
     const mobile = req.header("mobile");
-    const response = await Parcel.find({
+    const response = await ParcelHistory.find({
       $or: [{ "sender.mobile": mobile }, { "recipient.mobile": mobile }],
     });
-    const senderParcels = await Parcel.find({ "sender.mobile": mobile });
 
-    if (senderParcels.length > 0) {
+    if (response.length > 0) {
       // The mobile number matches either a sender or recipient
       res.status(200).json({
         response: response,
         success: true,
-        isSender: senderParcels.length > 0,
       });
     } else {
       res.status(404).json({
@@ -39,5 +37,5 @@ async function findParcels(req, res, next) {
 }
 
 module.exports = {
-  findParcels,
+  findParcelsHistory,
 };
