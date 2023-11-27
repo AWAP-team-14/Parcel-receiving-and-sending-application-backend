@@ -34,7 +34,10 @@ mongoose
 app.use(cors());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // change this to the domain you want to allow access to))
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://red-mushroom-097000010.4.azurestaticapps.net"
+  ); // change this to the domain you want to allow access to))
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
