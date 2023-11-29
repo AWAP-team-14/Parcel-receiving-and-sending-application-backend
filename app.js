@@ -13,6 +13,7 @@ const driverLoginRouter = require("./router/driverLoginRouter");
 const createParcelRouter = require("./router/createParcelRouter");
 const touchScreenRouter = require("./router/touchScreenRouter");
 const parcelHistoryRouter = require("./router/parcelHistoryRouter");
+const getUsers = require("./router/getUsersRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -63,6 +64,7 @@ app.use("/delete", deleteRouter);
 app.use("/createparcel", createParcelRouter);
 app.use("/touchscreen", touchScreenRouter);
 app.use("/parcelhistory", parcelHistoryRouter);
+app.use("/getusers", getUsers);
 
 // 404 handler
 app.use(notFoundHandler);
