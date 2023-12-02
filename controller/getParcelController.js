@@ -15,6 +15,11 @@ async function findParcels(req, res, next) {
         success: true,
         isSender: senderParcels.length > 0,
       });
+    } else if (response.length > 0) {
+      res.status(200).json({
+        response: response,
+        success: true,
+      });
     } else {
       res.status(404).json({
         errors: {
