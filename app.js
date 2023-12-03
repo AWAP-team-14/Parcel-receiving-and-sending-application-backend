@@ -14,6 +14,7 @@ const createParcelRouter = require("./router/createParcelRouter");
 const touchScreenRouter = require("./router/touchScreenRouter");
 const parcelHistoryRouter = require("./router/parcelHistoryRouter");
 const getUsers = require("./router/getUsersRouter");
+const robotRouter = require("./router/robotRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -65,6 +66,7 @@ app.use("/createparcel", createParcelRouter);
 app.use("/touchscreen", touchScreenRouter);
 app.use("/parcelhistory", parcelHistoryRouter);
 app.use("/getusers", getUsers);
+app.use("/robot", robotRouter);
 
 // 404 handler
 app.use(notFoundHandler);
