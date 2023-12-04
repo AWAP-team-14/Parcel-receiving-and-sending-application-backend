@@ -24,7 +24,7 @@ async function createParcelRobot() {
     const senderAddressIndex = getRandomNumber(0, senderAddress.length - 1);
     const senderadd = senderAddress[senderAddressIndex];
 
-    // recwpient address should one of from this array ["Oulu", "Helsinki", "Tampere", "Turku", "Kuopio"]}
+    // recipient address should one of from this array ["Oulu", "Helsinki", "Tampere", "Turku", "Kuopio"]}
     const recepientAddress = ["Oulu", "Helsinki", "Tampere", "Turku", "Kuopio"];
     const recepientAddressIndex = getRandomNumber(
       0,
