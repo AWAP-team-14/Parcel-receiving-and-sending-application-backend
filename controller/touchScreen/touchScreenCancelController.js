@@ -4,7 +4,7 @@ const ParcelLocker = require("../../models/ParcelLocker");
 const ParcelHistory = require("../../models/ParcelHistory");
 async function touchScreenCancel(req, res, next) {
   const token = req.header("auth_token") || "";
-  console.log(token);
+
   try {
     const locker = await ParcelLocker.findOne({
       location: req.body.address,
