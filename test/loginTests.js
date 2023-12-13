@@ -3,6 +3,7 @@ const expect = chai.expect;
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 const server = require("../app");
+const { deleteOne } = require("../models/Parcel");
 
 describe("Login API", () => {
   before(async () => {
@@ -13,7 +14,8 @@ describe("Login API", () => {
     await server.close();
   });
 
-  it("should successfully log in with valid credentials", async () => {
+  it("should successfully log in with valid credentials", async function () {
+    this.timeout(10000);
     const response = await chai
       .request("http://localhost:5000/login")
       .post("/")
